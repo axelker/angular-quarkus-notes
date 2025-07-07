@@ -1,4 +1,5 @@
 package org.notes.mapper;
+
 import org.mapstruct.*;
 import org.notes.dto.NoteDto;
 import org.notes.entity.NoteEntity;
@@ -8,9 +9,9 @@ import java.util.Objects;
 
 @Mapper(componentModel = "cdi",
     nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-public interface NoteMapper {
+    public interface NoteMapper {
 
-  // @Mapping(target = "id", ignore = true)
+  @Mapping(target = "id", ignore = true)
   NoteEntity toEntity(NoteDto dto);
 
   NoteDto toDto(NoteEntity entity);
