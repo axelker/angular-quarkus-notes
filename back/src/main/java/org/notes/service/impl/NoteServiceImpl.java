@@ -3,11 +3,12 @@ import jakarta.enterprise.context.ApplicationScoped;
 import org.notes.dto.NoteDto;
 import org.notes.entity.NoteEntity;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.NoSuchElementException;
+import java.util.NoSuchElementException;
 import org.notes.mapper.NoteMapper;
 import org.notes.repository.NoteRepository;
 import org.notes.services.NoteService;
 import java.util.NoSuchElementException;
+import jakarta.transaction.Transactional;
 
 
 @ApplicationScoped
@@ -28,10 +29,11 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
+    @Transactional
     public NoteDto create(NoteDto note){
         try {
-            NoteEntity entity = mapper.toEntity(dto);
-            repository.persist(entity);
+            NoteEntity entity = mapper.toEntity(note);
+            repository.persistAndFlush(entity);
 
             if (entity.getId() == null) {
                 throw new RuntimeException("Failed to create note: no ID generated.");
@@ -44,6 +46,7 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
+    @Transactional
     public NoteDto update(Long id,NoteDto note){
         var entity = repository.findById(id);
         if (null == entity) {
@@ -51,12 +54,12 @@ public class NoteServiceImpl implements NoteService {
         }
         try {
             var entityToUpdate = NoteEntity.builder()
-            .id(entity.id)
-            .name(dto.name)
-            .content(dto.content)
+            .id(entity.getId())
+            .name(note.getName())
+            .content(note.getContent())
             .build();
         
-            repository.update(entityToUpdate);
+            repository.persistAndFlush(entityToUpdate);
             return mapper.toDto(entityToUpdate);
             
         } catch (Exception e) {
@@ -66,9 +69,10 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id){
         var entity = repository.findById(id);
-        if (Object.isNull(entity)) {
+        if (null == entity) {
             throw new NoSuchElementException("Note with the ID " + id + " not found.");
         }
         repository.deleteById(id);

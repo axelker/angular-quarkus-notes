@@ -1,8 +1,9 @@
 package org.notes.dto;
 
-import lombok.Getter;
-import lombok.Builder;
+import lombok.*;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Getter
 public class NoteDto {

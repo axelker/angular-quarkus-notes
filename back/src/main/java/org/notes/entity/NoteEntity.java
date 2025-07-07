@@ -9,10 +9,11 @@ import lombok.AccessLevel;
 
 
 
-@Builder(toBuilder = true)
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Entity
+@Builder(toBuilder = true)
 @Table(name = "notes")
 public class NoteEntity  {
     @Id @GeneratedValue private Long id;
