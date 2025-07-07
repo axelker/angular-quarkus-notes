@@ -1,14 +1,20 @@
-package org.notes.services.impl;
+package org.notes.service.impl;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.notes.dto.NoteDto;
+import org.notes.dto.PagedResponse;
 import org.notes.entity.NoteEntity;
 import jakarta.inject.Inject;
+
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+
 import org.notes.mapper.NoteMapper;
 import org.notes.repository.NoteRepository;
-import org.notes.services.NoteService;
-import java.util.NoSuchElementException;
+import org.notes.service.NoteService;
 import jakarta.transaction.Transactional;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
+import io.quarkus.panache.common.Page;
 
 
 @ApplicationScoped
@@ -18,6 +24,24 @@ public class NoteServiceImpl implements NoteService {
     private NoteRepository repository;
     @Inject
     private NoteMapper mapper;
+
+
+    @Override
+    public PagedResponse<NoteDto> findAll(int pageIndex, int pageSize) {
+        PanacheQuery<NoteEntity> query = repository.findAll().page(Page.of(pageIndex, pageSize));
+        List<NoteDto> notes = query.list().stream()
+                .map(mapper::toDto)
+                .collect(Collectors.toList());
+
+        long total = query.count();
+
+        return PagedResponse.<NoteDto>builder()
+                .items(notes)
+                .total(total)
+                .page(pageIndex)
+                .size(pageSize)
+                .build();
+    }
 
     @Override
     public NoteDto findById(Long id) {

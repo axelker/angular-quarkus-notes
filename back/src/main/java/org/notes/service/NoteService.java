@@ -1,10 +1,12 @@
-package org.notes.services;
-import org.notes.dto.NoteDto;
+package org.notes.service;
 
-import jakarta.enterprise.context.ApplicationScoped;
+import org.notes.dto.NoteDto;
+import org.notes.dto.PagedResponse;
+
 
 public interface NoteService {
 
+    PagedResponse<NoteDto> findAll(int pageIndex, int pageSize);
     NoteDto findById(Long id);
     NoteDto create(NoteDto note);
     NoteDto update(Long id,NoteDto note);
