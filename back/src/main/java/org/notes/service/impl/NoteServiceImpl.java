@@ -59,10 +59,6 @@ public class NoteServiceImpl implements NoteService {
             NoteEntity entity = mapper.toEntity(note);
             repository.persistAndFlush(entity);
 
-            if (entity.getId() == null) {
-                throw new RuntimeException("Failed to create note: no ID generated.");
-            }
-
             return mapper.toDto(entity);
         } catch (Exception e) {
             throw new RuntimeException("An unexpected error occurred while creating the note.");
