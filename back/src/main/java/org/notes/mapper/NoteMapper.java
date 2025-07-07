@@ -4,8 +4,6 @@ import org.mapstruct.*;
 import org.notes.dto.NoteDto;
 import org.notes.entity.NoteEntity;
 
-import java.util.List;
-import java.util.Objects;
 
 @Mapper(componentModel = "cdi",
     nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
