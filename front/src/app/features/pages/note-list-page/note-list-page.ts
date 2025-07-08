@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { NoteList } from '../../components/note-list/note-list';
 
 @Component({
   selector: 'app-note-list-page',
-  imports: [],
+  imports: [NoteList],
   templateUrl: './note-list-page.html',
   styleUrl: './note-list-page.scss'
 })

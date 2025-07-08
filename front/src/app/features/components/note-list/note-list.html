@@ -1,1 +1,12 @@
-<p>note-list works!</p>
+
+<div>
+    @if(notes() != null) {
+        @for (note of notes()?.items; track note.id) {
+        <li>{{ note.name }}</li>
+        <li>{{ note.content }}</li>
+        } @empty {
+        <li>There are no notes.</li>
+        }
+    }
+   
+</div>
