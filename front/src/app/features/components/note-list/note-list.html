@@ -29,7 +29,8 @@
 
             <div class="flex gap-3 mt-2 mb-4">
               <button matListItemLine (click)="save(note)" mat-stroked-button color="accent">Save</button>
-              <button matListItemLine [disabled]="!note.id" (click)="delete(note)" mat-stroked-button color="warn">Delete</button>
+              <button matListItemLine (click)="delete(note)" mat-stroked-button color="warn">Delete</button>
+              <button matListItemLine [routerLink]="['/notes', note.id]" mat-stroked-button color="accent">Show</button>
             </div>
           </div>
         </mat-list-item>

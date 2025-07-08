@@ -7,10 +7,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-note-list',
-  imports: [MatListModule, MatButtonModule, MatIconModule, FormsModule],
+  imports: [MatListModule, MatButtonModule, MatIconModule, FormsModule,RouterLink],
   templateUrl: './note-list.html',
   styleUrl: './note-list.scss'
 })
