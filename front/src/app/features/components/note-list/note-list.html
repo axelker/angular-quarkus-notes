@@ -1,12 +1,43 @@
+<div class="p-6 max-w-3xl mx-auto">
 
-<div>
-    @if(notes() != null) {
-        @for (note of notes()?.items; track note.id) {
-        <li>{{ note.name }}</li>
-        <li>{{ note.content }}</li>
-        } @empty {
-        <li>There are no notes.</li>
-        }
-    }
-   
+  <div class="flex justify-end mb-4">
+    <button (click)="addEmptyNote()" mat-fab color="primary" aria-label="Add note">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+
+  @if (isAdding()) {
+    <div class="bg-white rounded-xl shadow-md p-4 mb-4 border border-blue-200">
+      <input [(ngModel)]="newNote().name" class="w-full text-lg font-semibold outline-none border-b mb-2" placeholder="Note title" />
+      <textarea [(ngModel)]="newNote().content" class="w-full text-gray-600 outline-none border-b mb-2" placeholder="Note content"></textarea>
+      
+      <div class="flex gap-3 mt-2">
+        <button (click)="confirmAdd()" mat-stroked-button color="primary">Add</button>
+        <button (click)="cancelAdd()" mat-stroked-button color="warn">Cancel</button>
+      </div>
+    </div>
+  }
+
+  @if (notes() != null) {
+    <mat-list>
+      @for (note of notes()?.items; track note.id) {
+        <mat-list-item class="bg-white rounded-xl shadow-sm p-8 mb-3">
+          <div class="w-full flex flex-col gap-2">
+            <input matListItemTitle [(ngModel)]="note.name" class="text-lg font-bold outline-none border-b" placeholder="Note title" />
+            <textarea matListItemLine [(ngModel)]="note.content" class="text-gray-600 outline-none border-b" placeholder="Note content"></textarea>
+
+            <div class="flex gap-3 mt-2 mb-4">
+              <button matListItemLine (click)="save(note)" mat-stroked-button color="accent">Save</button>
+              <button matListItemLine [disabled]="!note.id" (click)="delete(note)" mat-stroked-button color="warn">Delete</button>
+            </div>
+          </div>
+        </mat-list-item>
+      } @empty {
+        <div class="text-center text-gray-500 mt-8">
+          There are no notes.
+        </div>
+      }
+    </mat-list>
+  }
 </div>

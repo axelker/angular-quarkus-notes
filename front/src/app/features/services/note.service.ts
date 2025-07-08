@@ -33,7 +33,7 @@ export class NoteService {
   update(id:number,note:Note): Observable<Note> {
     return this.http.put<Note>(`${this.path}/${id}`, note);
   }
-  delete(id:number): void {
-    this.http.delete<Note>(`${this.path}/${id}`);
+  delete(id:number): Observable<void> {
+    return this.http.delete<void>(`${this.path}/${id}`);
   }
 }
