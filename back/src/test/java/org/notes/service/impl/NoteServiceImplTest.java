@@ -28,7 +28,7 @@ public class NoteServiceImplTest {
 
     @Test
     public void testFindById_Found() {
-        NoteEntity entity = new NoteEntity(1L, "Test Name", "Test Content");
+        NoteEntity entity = NoteEntity.builder().id(1L).name("Test Name").content("Test Content").build();
         NoteDto dto = NoteDto.builder().name("Test Name").content("Test Content").build();
 
         when(repository.findById(1L)).thenReturn(entity);
@@ -53,7 +53,7 @@ public class NoteServiceImplTest {
     @Test
     public void testCreate_Success() {
         NoteDto inputDto = NoteDto.builder().name("Name").content("Content").build();
-        NoteEntity entity = new NoteEntity(null, "Name", "Content");
+        NoteEntity entity = NoteEntity.builder().id(null).name("Name").content("Content").build();;
         NoteDto outputDto = NoteDto.builder().name("Name").content("Content").build();
 
         when(mapper.toEntity(inputDto)).thenReturn(entity);
@@ -69,7 +69,7 @@ public class NoteServiceImplTest {
 
     @Test
     public void testDelete_Success() {
-        NoteEntity entity = new NoteEntity(1L, "Name", "Content");
+        NoteEntity entity = NoteEntity.builder().id(1L).name("Name").content("Content").build();
         when(repository.findById(1L)).thenReturn(entity);
         when(repository.deleteById(1L)).thenReturn(true);
 
