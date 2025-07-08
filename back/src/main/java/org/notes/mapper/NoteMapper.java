@@ -10,6 +10,7 @@ import org.notes.entity.NoteEntity;
     public interface NoteMapper {
 
   @Mapping(target = "id", ignore = true)
+  @Mapping(target = "updatedAt", ignore = true)
   NoteEntity toEntity(NoteDto dto);
 
   NoteDto toDto(NoteEntity entity);
