@@ -15,11 +15,13 @@ import org.notes.service.NoteService;
 import jakarta.transaction.Transactional;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.panache.common.Page;
-
+import org.jboss.logging.Logger;
 
 @ApplicationScoped
 public class NoteServiceImpl implements NoteService {
-    
+    @Inject
+    Logger log;
+
     @Inject
     private NoteRepository repository;
     @Inject
@@ -73,13 +75,15 @@ public class NoteServiceImpl implements NoteService {
             throw new NoSuchElementException("Note with the ID " + id + " not found.");
         }
         try {
-            var entityToUpdate = NoteEntity.builder()
-            .id(entity.getId())
+
+            var entityToUpdate = entity.toBuilder()
             .name(note.getName())
             .content(note.getContent())
             .build();
-        
-            repository.persistAndFlush(entityToUpdate);
+
+            repository.getEntityManager().merge(entityToUpdate);
+            repository.getEntityManager().flush();
+
             return mapper.toDto(entityToUpdate);
             
         } catch (Exception e) {
