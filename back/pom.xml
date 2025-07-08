@@ -18,6 +18,7 @@
         <mapstruct.version>1.6.3</mapstruct.version>
         <lombok.version>1.18.38</lombok.version>
         <lombok-mapstruct.version>0.2.0</lombok-mapstruct.version>
+        <quarkus-rest-jackson.version>3.24.2</quarkus-rest-jackson.version>
     </properties>
 
     <dependencyManagement>
@@ -75,6 +76,12 @@
             <artifactId>mapstruct-processor</artifactId>
             <version>${mapstruct.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-rest-jackson</artifactId>
+            <version>${quarkus-rest-jackson.version}</version>
+        </dependency>
+
 
         <!--Test-->
         <dependency>
