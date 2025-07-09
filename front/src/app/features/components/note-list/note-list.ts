@@ -43,15 +43,22 @@ export class NoteList implements OnInit {
 
   confirmAdd() {
     const note = this.newNote();
-    this.noteService.create(note).subscribe(created => {
-      this.notes.update(paged => {
-        if (!paged) return paged;
-        return {
-          ...paged,
-          items: [created, ...paged.items]
-        };
-      });
-      this.cancelAdd();
+    this.noteService.create(note).subscribe({
+      next: (newNote) => {
+        this.notes.update(paged => {
+          if (!paged) return paged;
+
+          return {
+            ...paged,
+            items: [newNote,...paged.items]
+          };
+        });
+        this.cancelAdd();
+      },
+      error: err => {
+        console.error(err);
+        this.showError("Creation failed.");
+      }
     });
   }
 
@@ -74,8 +81,8 @@ export class NoteList implements OnInit {
 
           return {
             ...paged,
-            items: paged.items.filter(note =>
-              note.id !== note.id
+            items: paged.items.filter(n =>
+              n.id !== note.id
             )
           };
         });
@@ -87,35 +94,11 @@ export class NoteList implements OnInit {
     });
   }
 
-  save(note: Note) {
-    if (note.id) {
-      this.update(note.id, note);
+  update(note: Note) {
+    if (!note.id) {
       return;
     }
-    this.create(note);
-  }
-
-  private create(note: Note) {
-    this.noteService.create(note).subscribe({
-      next: (newNote) => {
-        this.notes.update(paged => {
-          if (!paged) return paged;
-
-          return {
-            ...paged,
-            items: [...paged.items, newNote]
-          };
-        });
-      },
-      error: err => {
-        console.error(err);
-        this.showError("Creation failed.");
-      }
-    });
-  }
-
-  private update(id: number, note: Note) {
-    this.noteService.update(id, note).subscribe({
+    this.noteService.update(note.id, note).subscribe({
       next: (newNote) => {
         this.notes.update(paged => {
           if (!paged) return paged;
@@ -123,7 +106,7 @@ export class NoteList implements OnInit {
           return {
             ...paged,
             items: paged.items.map(note =>
-              note.id === id ? newNote : note
+              note.id === note.id ? newNote : note
             )
           };
         });

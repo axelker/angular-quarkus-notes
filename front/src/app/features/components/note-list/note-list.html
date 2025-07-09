@@ -24,8 +24,8 @@
       @for (note of notes()?.items; track note.id) {
         <mat-list-item class="bg-white rounded-xl shadow-sm p-8 mb-3">
           <div class="w-full flex flex-col gap-2">
-            <input matListItemTitle [(ngModel)]="note.name" class="text-lg font-bold outline-none border-b" placeholder="Note title" />
-            <textarea matListItemLine [(ngModel)]="note.content" class="text-gray-600 outline-none border-b" placeholder="Note content"></textarea>
+            <input data-testid="input-note-title" matListItemTitle [(ngModel)]="note.name" class="text-lg font-bold outline-none border-b" placeholder="Note title" />
+            <textarea data-testid="input-note-content" matListItemLine [(ngModel)]="note.content" class="text-gray-600 outline-none border-b" placeholder="Note content"></textarea>
 
             <div class="flex gap-3 mt-2 mb-4">
               <button matListItemLine (click)="save(note)" mat-stroked-button color="accent">Save</button>
@@ -35,7 +35,7 @@
           </div>
         </mat-list-item>
       } @empty {
-        <div class="text-center text-gray-500 mt-8">
+        <div data-testid="text-note-not-found" class="text-center text-gray-500 mt-8">
           There are no notes.
         </div>
       }
