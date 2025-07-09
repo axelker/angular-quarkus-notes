@@ -4,6 +4,8 @@ This is a simple test project to integrate a Quarkus backend API with an Angular
 
 ---
 
+![App](docs/readme.png)
+
 ## Technologies Used
 
 - **Backend:** [Quarkus](https://quarkus.io/) (Java 21)
