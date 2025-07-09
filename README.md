@@ -9,6 +9,7 @@ This is a simple test project to integrate a Quarkus backend API with an Angular
 - **Backend:** [Quarkus](https://quarkus.io/) (Java 21)
 - **Frontend:** [Angular](https://angular.io/) (version X.X)
 - **Database:** PostgreSQL
+- **Test:** Junit & Jest
 
 ---
 
@@ -18,6 +19,7 @@ This is a simple test project to integrate a Quarkus backend API with an Angular
 - Maven
 - Node.js and npm
 - PostgreSQL
+
 
 
 ---
