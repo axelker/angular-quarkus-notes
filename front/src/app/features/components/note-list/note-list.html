@@ -22,18 +22,21 @@
   @if (notes() != null) {
     <mat-list>
       @for (note of notes()?.items; track note.id) {
-        <mat-list-item class="bg-white rounded-xl shadow-sm p-8 mb-3">
+        <div class="bg-white rounded-xl shadow-sm p-4 mb-3">
           <div class="w-full flex flex-col gap-2">
-            <input data-testid="input-note-title" matListItemTitle [(ngModel)]="note.name" class="text-lg font-bold outline-none border-b" placeholder="Note title" />
-            <textarea data-testid="input-note-content" matListItemLine [(ngModel)]="note.content" class="text-gray-600 outline-none border-b" placeholder="Note content"></textarea>
+            <input data-testid="input-note-title" [(ngModel)]="note.name"
+                  class="text-lg font-bold outline-none border-b" placeholder="Note title" />
+
+            <textarea data-testid="input-note-content" [(ngModel)]="note.content"
+                      class="text-gray-600 outline-none border-b" placeholder="Note content"></textarea>
 
             <div class="flex gap-3 mt-2 mb-4">
-              <button matListItemLine (click)="save(note)" mat-stroked-button color="accent">Save</button>
-              <button matListItemLine (click)="delete(note)" mat-stroked-button color="warn">Delete</button>
-              <button matListItemLine [routerLink]="['/notes', note.id]" mat-stroked-button color="accent">Show</button>
+              <button (click)="update(note)" mat-stroked-button color="accent">Save</button>
+              <button (click)="delete(note)" mat-stroked-button color="warn">Delete</button>
+              <button [routerLink]="['/notes', note.id]" mat-stroked-button color="accent">Show</button>
             </div>
           </div>
-        </mat-list-item>
+        </div>
       } @empty {
         <div data-testid="text-note-not-found" class="text-center text-gray-500 mt-8">
           There are no notes.
