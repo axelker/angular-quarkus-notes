@@ -23,6 +23,6 @@ jobs:
       working-directory: ./back
       run: |
         chmod +x ./mvnw
-        ./mvnw test
-        ./mvnw package -DskipTests=false
+        ./mvnw clean test -Dquarkus.profile=test
+        ./mvnw package -DskipTests=false -Dquarkus.profile=test
 
