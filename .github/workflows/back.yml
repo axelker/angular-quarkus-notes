@@ -22,6 +22,7 @@ jobs:
     - name: Build and Test Quarkus backend
       working-directory: ./back
       run: |
+        chmod +x ./mvnw
         ./mvnw test
         ./mvnw package -DskipTests=false
 
