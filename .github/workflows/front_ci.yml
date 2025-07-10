@@ -1,0 +1,34 @@
+name: Build, Test and Deploy Angular Frontend
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-test-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js 21
+      uses: actions/setup-node@v4
+      with:
+        node-version: '21'
+
+    - name: Install dependencies
+      run: |
+        cd front
+        npm ci
+
+    - name: Build
+      run: |
+        cd front
+        npm run build
+
+    - name: Test
+      run: |
+        cd front
+        npm test -- --browsers=ChromeHeadless
