@@ -28,15 +28,21 @@ This is a simple test project to integrate a Quarkus backend API with an Angular
 
 ## Running the Backend (Quarkus)
 
-1. Configure your database connection in `back/src/main/resources/application.properties`:
+1. Environment Variables (Backend)
 
-```sh
-quarkus.datasource.db-kind=postgresql
-quarkus.datasource.username=postgres
-quarkus.datasource.password=1234
-quarkus.datasource.jdbc.url=jdbc:postgresql://localhost:5432/notes-test
-quarkus.hibernate-orm.database.generation=drop-and-create
+Database configuration can also be managed through environment variables.
+An example file is provided: env.sample
+
+
+``` sh
+POSTGRES_USERNAME=postgres
+POSTGRES_PASSWORD=1234
+POSTGRES_URL=jdbc:postgresql://localhost:5432/notes-test
 ```
+
+To use it, create your own .env file in the back directory:
+
+cp back/env.sample back/.env
 
 2. Start the backend
 ```sh
