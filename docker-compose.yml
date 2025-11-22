@@ -1,4 +1,3 @@
-version: '3.8'
 
 services:
   db:
@@ -18,9 +17,7 @@ services:
       retries: 5
 
   backend:
-    build:
-      context: ./back
-      dockerfile: Dockerfile
+    image: reedhunter/notes-back:latest
     environment:
       POSTGRES_USERNAME: ${POSTGRES_USERNAME}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -33,9 +30,7 @@ services:
         condition: service_healthy
 
   frontend:
-    build:
-      context: ./front
-      dockerfile: Dockerfile
+    image: reedhunter/notes-front:latest
     ports:
       - "80:80"
     depends_on:

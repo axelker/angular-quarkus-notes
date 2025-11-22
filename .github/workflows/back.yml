@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  build-test-deploy:
+  build-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,3 +26,28 @@ jobs:
         ./mvnw clean test -Dquarkus.profile=test
         ./mvnw package -DskipTests=false -Dquarkus.profile=test
 
+  build-and-publish-docker-image:
+    name: Build And Publish docker image
+    runs-on: ubuntu-latest
+    needs: [build-and-test, code-quality-check]
+    timeout-minutes: 10
+
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
+  
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+ 
+    - name: Publish docker image
+      run: |
+          cd back
+          docker build -t notes-back .
+          docker tag notes-back ${{ secrets.DOCKERHUB_USERNAME }}/notes-back:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/notes-back:latest
