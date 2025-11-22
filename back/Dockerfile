@@ -1,9 +1,9 @@
 FROM maven:3.9.6-eclipse-temurin-21 AS build
 RUN mkdir -p /workspace
 WORKDIR /workspace
-COPY pom.xml .
-COPY src ./src
-RUN mvn -B package -DskipTests
+COPY pom.xml /workspace
+COPY src /workspace/src
+RUN mvn -B -f pom.xml clean package -DskipTests
 
 FROM eclipse-temurin:21-jre
 WORKDIR /app
